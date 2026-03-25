@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>BNI PPT 어드민</title>
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/admin.css">
+</head>
+<body>
+
+  <!-- 로그인 -->
+  <div id="login-screen" class="login-screen">
+    <div class="container">
+      <div class="logo">BNI Hero</div>
+      <h1>ST 어드민</h1>
+      <form id="login-form">
+        <div class="form-group">
+          <label for="login-email">이메일</label>
+          <input type="email" id="login-email" value="admin@bnihero.kr">
+        </div>
+        <div class="form-group">
+          <label for="login-pw">비밀번호</label>
+          <input type="password" id="login-pw">
+        </div>
+        <button type="submit">로그인</button>
+        <div id="login-error" class="error hidden"></div>
+      </form>
+    </div>
+  </div>
+
+  <!-- 어드민 -->
+  <div id="admin-screen" class="hidden">
+    <header class="admin-header">
+      <span class="logo">BNI Hero Admin</span>
+      <button id="logout-btn">로그아웃</button>
+    </header>
+
+    <div class="admin-container">
+      <!-- 주차 선택 -->
+      <div class="card">
+        <h2>주차 선택</h2>
+        <div class="row">
+          <input type="date" id="admin-week-date">
+          <button id="load-btn">불러오기</button>
+        </div>
+      </div>
+
+      <!-- 제출 현황 -->
+      <div class="card">
+        <h2>제출 현황</h2>
+        <div id="submission-status">
+          <div class="status-row">
+            <span>네트워킹 교육</span>
+            <span id="status-education" class="badge badge-empty">미제출</span>
+          </div>
+          <div class="status-row">
+            <span>부의장 자료</span>
+            <span id="status-vice_chair" class="badge badge-empty">미제출</span>
+          </div>
+          <div class="status-row">
+            <span>피처 프레젠테이션</span>
+            <span id="status-feature" class="badge badge-empty">미제출</span>
+          </div>
+          <div class="status-row">
+            <span>위클리 (WP)</span>
+            <span id="status-wp" class="badge badge-empty">0명</span>
+          </div>
+        </div>
+        <div id="wp-list" class="wp-list hidden"></div>
+      </div>
+
+      <!-- 섹션 업로드 -->
+      <div class="card">
+        <h2>파일 업로드</h2>
+
+        <div class="upload-section">
+          <label>네트워킹 교육 자료</label>
+          <div class="file-row">
+            <input type="file" id="file-education" accept=".ppt,.pptx">
+            <button class="upload-btn" data-type="education">업로드</button>
+          </div>
+        </div>
+
+        <div class="upload-section">
+          <label>부의장 자료</label>
+          <div class="file-row">
+            <input type="file" id="file-vice_chair" accept=".ppt,.pptx">
+            <button class="upload-btn" data-type="vice_chair">업로드</button>
+          </div>
+        </div>
+
+        <div class="upload-section">
+          <label>피처 프레젠테이션</label>
+          <div class="file-row">
+            <input type="file" id="file-feature" accept=".ppt,.pptx">
+            <button class="upload-btn" data-type="feature">업로드</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- 공지사항 -->
+      <div class="card">
+        <h2>공지사항</h2>
+        <textarea id="notice-text" rows="5" placeholder="이번 주 공지사항을 입력하세요"></textarea>
+        <button id="save-notice-btn">저장</button>
+      </div>
+
+      <!-- 취합 안내 -->
+      <div class="card merge-card">
+        <h2>장표 취합</h2>
+        <p>모든 파일이 준비되면 PC에서 아래 명령어를 실행하세요:</p>
+        <code id="merge-command">python merge.py --date YYYY-MM-DD</code>
+        <button id="copy-cmd-btn">복사</button>
+        <p class="hint">취합 완료 후 바탕화면에 <strong>히어로챕터_장표_YYYY-MM-DD.pptx</strong> 파일이 생성됩니다.</p>
+      </div>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="js/supabase-client.js"></script>
+  <script src="js/admin.js"></script>
+</body>
+</html>

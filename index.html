@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>BNI 히어로챕터 WP 제출</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <div class="container">
+    <div class="logo">BNI Hero</div>
+    <h1>위클리 프레젠테이션 제출</h1>
+    <p class="subtitle">매주 회의 전날까지 제출해주세요</p>
+
+    <form id="wp-form">
+      <input type="hidden" id="week-date">
+
+      <div class="form-group">
+        <label for="member-name">이름 선택</label>
+        <select id="member-name" required>
+          <option value="">불러오는 중...</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label for="wp-file">WP 파일 (PPT/PPTX)</label>
+        <div class="file-drop" id="file-drop">
+          <input type="file" id="wp-file" accept=".ppt,.pptx" required>
+          <div class="file-drop-label">
+            <span class="icon">📎</span>
+            <span id="file-name">파일을 선택하거나 여기에 끌어다 놓으세요</span>
+          </div>
+        </div>
+      </div>
+
+      <button type="submit" id="submit-btn">제출하기</button>
+    </form>
+
+    <div id="result" class="result hidden"></div>
+
+    <div id="locked-msg" class="locked hidden">
+      <div class="lock-icon">🔒</div>
+      <h2>제출 마감</h2>
+      <p>수요일 정오에 마감되었습니다.<br>이번 주는 전주 제출 파일로 진행됩니다.</p>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="js/supabase-client.js"></script>
+  <script src="js/main.js"></script>
+</body>
+</html>

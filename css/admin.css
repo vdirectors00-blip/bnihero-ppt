@@ -1,0 +1,184 @@
+.login-screen {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+}
+
+.admin-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 14px 24px;
+  background: #fff;
+  border-bottom: 1px solid #eee;
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+
+.admin-header .logo { font-size: 14px; font-weight: 700; color: #b8272e; letter-spacing: 1px; }
+
+.admin-header button {
+  padding: 6px 14px;
+  border: 1px solid #ddd;
+  background: #fff;
+  border-radius: 6px;
+  font-size: 13px;
+  cursor: pointer;
+}
+
+.admin-container {
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 24px 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.card {
+  background: #fff;
+  border-radius: 12px;
+  padding: 20px;
+  box-shadow: 0 1px 4px rgba(0,0,0,.06);
+}
+
+.card h2 {
+  font-size: 15px;
+  font-weight: 700;
+  margin-bottom: 14px;
+  color: #333;
+}
+
+.row {
+  display: flex;
+  gap: 8px;
+}
+
+.row input { flex: 1; }
+
+.row button, #load-btn {
+  padding: 11px 18px;
+  background: #b8272e;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.status-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 0;
+  border-bottom: 1px solid #f0f0f0;
+  font-size: 14px;
+}
+.status-row:last-child { border-bottom: none; }
+
+.badge {
+  padding: 3px 10px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 600;
+}
+.badge-empty { background: #f5f5f5; color: #999; }
+.badge-done { background: #e8f5e9; color: #2e7d32; }
+.badge-partial { background: #fff3e0; color: #e65100; }
+
+.wp-list {
+  margin-top: 10px;
+  font-size: 13px;
+  color: #555;
+}
+.wp-item {
+  padding: 4px 0;
+  border-bottom: 1px solid #f5f5f5;
+}
+
+.upload-section {
+  margin-bottom: 16px;
+}
+.upload-section label {
+  font-size: 13px;
+  font-weight: 600;
+  color: #444;
+  margin-bottom: 6px;
+  display: block;
+}
+.file-row {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+.file-row input[type="file"] {
+  flex: 1;
+  font-size: 13px;
+  padding: 8px;
+  border: 1.5px solid #ddd;
+  border-radius: 8px;
+  background: #fff;
+}
+.upload-btn {
+  padding: 9px 16px;
+  background: #333;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  white-space: nowrap;
+}
+.upload-btn:hover { background: #111; }
+
+textarea {
+  width: 100%;
+  padding: 12px;
+  border: 1.5px solid #ddd;
+  border-radius: 8px;
+  font-size: 14px;
+  resize: vertical;
+  font-family: inherit;
+  margin-bottom: 10px;
+}
+
+#save-notice-btn {
+  padding: 9px 20px;
+  background: #b8272e;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.merge-card { border: 2px solid #b8272e; }
+.merge-card p { font-size: 13px; color: #555; margin-bottom: 10px; }
+.merge-card code {
+  display: block;
+  background: #f5f5f5;
+  padding: 10px 14px;
+  border-radius: 6px;
+  font-size: 13px;
+  margin-bottom: 8px;
+  word-break: break-all;
+}
+#copy-cmd-btn {
+  padding: 7px 14px;
+  background: #555;
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  font-size: 12px;
+  cursor: pointer;
+  margin-bottom: 12px;
+}
+.hint { font-size: 12px; color: #999; }
+
+.error { color: #c62828; font-size: 13px; margin-top: 8px; }
