@@ -29,13 +29,20 @@ sb.auth.getSession().then(({ data }) => {
   if (data.session) showAdmin();
 });
 
-function showAdmin() {
+async function showAdmin() {
   loginScreen.classList.add('hidden');
   adminScreen.classList.remove('hidden');
-  // 다음 금요일 기본값
+  // 다음 오프라인 회의 기본값 (없으면 빈칸)
   const dateInput = document.getElementById('admin-week-date');
-  dateInput.value = getNextFriday();
-  loadSubmissions(dateInput.value);
+  try {
+    const d = await getNextOfflineMeeting();
+    if (d) {
+      dateInput.value = d;
+      loadSubmissions(d);
+    }
+  } catch (err) {
+    console.error('일정 조회 실패:', err);
+  }
 }
 
 // ── 주차 불러오기 ─────────────────────────────────────────────────────────────

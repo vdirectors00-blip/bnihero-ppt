@@ -1,7 +1,3 @@
-const BNIHERO_URL = 'https://dzzjlycqxfqdyqgnqixh.supabase.co';
-const BNIHERO_ANON = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImR6empseWNxeGZxZHlxZ25xaXhoIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzM5NjU3NTEsImV4cCI6MjA4OTU0MTc1MX0.PBXuSGfe2h-4JNl7dXGKN6WYQ-Jqk21Vt2KD-Fx39Jc';
-const sbHero = supabase.createClient(BNIHERO_URL, BNIHERO_ANON);
-
 const weekDateInput = document.getElementById('week-date');
 const memberSelect  = document.getElementById('member-name');
 const wpFile        = document.getElementById('wp-file');
@@ -9,13 +5,8 @@ const fileNameEl    = document.getElementById('file-name');
 const fileDrop      = document.getElementById('file-drop');
 const submitBtn     = document.getElementById('submit-btn');
 
-// 다음 금요일 세팅
-const nextFriday = getNextFriday();
-weekDateInput.value = nextFriday;
-
-// 날짜 표시
-document.getElementById('week-label').textContent =
-  `${nextFriday.replace(/-/g, '.')} 회의`;
+let nextFriday = null;
+let deadlinePassed = false;
 
 // 마감 여부
 function isDeadlinePassed(fridayDateStr) {
@@ -23,15 +14,12 @@ function isDeadlinePassed(fridayDateStr) {
   if (now.getDay() === 5) return true; // 금요일 당일
   const friday = new Date(fridayDateStr + 'T00:00:00');
   const deadline = new Date(friday);
-  deadline.setDate(friday.getDate() - 2);
+  deadline.setDate(friday.getDate() - 2); // 수요일
   deadline.setHours(12, 0, 0, 0);
   return now > deadline;
 }
 
-const deadlinePassed = isDeadlinePassed(nextFriday);
-
-if (deadlinePassed) {
-  document.getElementById('deadline-notice').classList.remove('hidden');
+function lockUpload() {
   submitBtn.disabled = true;
   submitBtn.textContent = '마감됨';
   fileDrop.style.opacity = '0.5';
@@ -67,10 +55,42 @@ async function loadAll() {
   }).join('');
 }
 
-loadAll().catch(err => {
-  document.getElementById('status-list').innerHTML = '<div class="loading">불러오기 실패. 새로고침 해주세요.</div>';
-  console.error(err);
-});
+// 초기화
+async function init() {
+  try {
+    nextFriday = await getNextOfflineMeeting();
+  } catch (err) {
+    console.error('일정 조회 실패:', err);
+  }
+
+  if (!nextFriday) {
+    // 오프라인 회의 없음 → 업로드 폼 숨김
+    document.getElementById('no-meeting-notice').classList.remove('hidden');
+    document.getElementById('upload-section').classList.add('hidden');
+    document.getElementById('status-section').classList.add('hidden');
+    return;
+  }
+
+  // 날짜 세팅
+  weekDateInput.value = nextFriday;
+  document.getElementById('week-label').textContent =
+    `${nextFriday.replace(/-/g, '.')} 회의`;
+
+  // 마감 체크
+  deadlinePassed = isDeadlinePassed(nextFriday);
+  if (deadlinePassed) {
+    document.getElementById('deadline-notice').classList.remove('hidden');
+    lockUpload();
+  }
+
+  // 멤버 + 현황 로드
+  loadAll().catch(err => {
+    document.getElementById('status-list').innerHTML = '<div class="loading">불러오기 실패. 새로고침 해주세요.</div>';
+    console.error(err);
+  });
+}
+
+init();
 
 // 파일 선택 표시
 wpFile.addEventListener('change', () => {
@@ -93,7 +113,7 @@ const result = document.getElementById('result');
 
 form.addEventListener('submit', async (e) => {
   e.preventDefault();
-  if (deadlinePassed) return;
+  if (deadlinePassed || !nextFriday) return;
 
   const memberName = memberSelect.value;
   const file = wpFile.files[0];

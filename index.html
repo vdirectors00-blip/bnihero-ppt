@@ -12,8 +12,13 @@
     <h1>위클리 프레젠테이션 제출</h1>
     <p class="subtitle" id="week-label"></p>
 
+    <!-- 오프라인 회의 없을 때 -->
+    <div id="no-meeting-notice" class="deadline-notice hidden">
+      이번 주는 오프라인 회의가 없습니다. WP 제출이 필요하지 않습니다.
+    </div>
+
     <!-- 제출 현황 -->
-    <div class="status-box" id="status-box">
+    <div class="status-box" id="status-section">
       <div class="status-header">이번 주 제출 현황</div>
       <div id="status-list"><div class="loading">불러오는 중...</div></div>
     </div>
@@ -23,31 +28,33 @@
       🔒 수요일 정오에 마감되었습니다. 미제출자는 전주 파일로 대체됩니다.
     </div>
 
-    <form id="wp-form">
-      <input type="hidden" id="week-date">
+    <div id="upload-section">
+      <form id="wp-form">
+        <input type="hidden" id="week-date">
 
-      <div class="form-group">
-        <label for="member-name">이름 선택</label>
-        <select id="member-name" required>
-          <option value="">불러오는 중...</option>
-        </select>
-      </div>
+        <div class="form-group">
+          <label for="member-name">이름 선택</label>
+          <select id="member-name" required>
+            <option value="">불러오는 중...</option>
+          </select>
+        </div>
 
-      <div class="form-group">
-        <label for="wp-file">WP 파일 (PPT/PPTX)</label>
-        <div class="file-drop" id="file-drop">
-          <input type="file" id="wp-file" accept=".ppt,.pptx" required>
-          <div class="file-drop-label">
-            <span class="icon">📎</span>
-            <span id="file-name">파일을 선택하거나 여기에 끌어다 놓으세요</span>
+        <div class="form-group">
+          <label for="wp-file">WP 파일 (PPT/PPTX)</label>
+          <div class="file-drop" id="file-drop">
+            <input type="file" id="wp-file" accept=".ppt,.pptx" required>
+            <div class="file-drop-label">
+              <span class="icon">📎</span>
+              <span id="file-name">파일을 선택하거나 여기에 끌어다 놓으세요</span>
+            </div>
           </div>
         </div>
-      </div>
 
-      <button type="submit" id="submit-btn">제출하기</button>
-    </form>
+        <button type="submit" id="submit-btn">제출하기</button>
+      </form>
 
-    <div id="result" class="result hidden"></div>
+      <div id="result" class="result hidden"></div>
+    </div>
   </div>
 
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
