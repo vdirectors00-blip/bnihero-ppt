@@ -48,6 +48,7 @@ async function loadSubmissions(weekDate) {
   try {
     const subs = await getSubmissions(weekDate);
     updateStatusUI(subs);
+    await updateDownloadList(subs, weekDate);
 
     // 공지사항 로드
     const notice = await getNotice();
@@ -59,6 +60,47 @@ async function loadSubmissions(weekDate) {
   } catch (err) {
     console.error(err);
   }
+}
+
+// ── 다운로드 목록 ─────────────────────────────────────────────────────────────
+const TYPE_LABELS = {
+  education: '네트워킹 교육',
+  vice_chair: '부의장 자료',
+  feature: '피처 프레젠테이션',
+  wp: 'WP',
+  result: '📎 최종 장표'
+};
+
+async function updateDownloadList(subs, weekDate) {
+  const list = document.getElementById('download-list');
+
+  // 최종 결과물도 조회
+  const { data: resultSubs } = await sb.from('ppt_submissions')
+    .select('*').eq('week_date', weekDate).eq('type', 'result');
+
+  const allSubs = [...(resultSubs || []), ...subs];
+
+  if (!allSubs.length) {
+    list.innerHTML = '<div class="loading">이 주차에 업로드된 파일이 없습니다.</div>';
+    return;
+  }
+
+  const rows = await Promise.all(allSubs.map(async (s) => {
+    try {
+      const { data } = await sb.storage.from('ppt-uploads').createSignedUrl(s.file_path, 3600);
+      const label = s.type === 'wp'
+        ? `WP — ${s.member_name}`
+        : (TYPE_LABELS[s.type] || s.type);
+      return `<div class="download-item">
+        <span>${label}</span>
+        <a href="${data.signedUrl}" download class="dl-btn">다운로드</a>
+      </div>`;
+    } catch {
+      return '';
+    }
+  }));
+
+  list.innerHTML = rows.join('');
 }
 
 function updateStatusUI(subs) {
