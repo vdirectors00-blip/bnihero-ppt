@@ -28,7 +28,7 @@ function isDeadlinePassed(fridayDateStr) {
   return now > deadline;
 }
 
-const deadlinePassed = isDeadlinePassed(nextFriday);
+const deadlinePassed = false; // TEST: 마감 체크 임시 비활성화
 
 if (deadlinePassed) {
   document.getElementById('deadline-notice').classList.remove('hidden');
