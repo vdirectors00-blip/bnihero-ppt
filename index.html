@@ -10,7 +10,18 @@
   <div class="container">
     <div class="logo">BNI Hero</div>
     <h1>위클리 프레젠테이션 제출</h1>
-    <p class="subtitle">매주 회의 전날까지 제출해주세요</p>
+    <p class="subtitle" id="week-label"></p>
+
+    <!-- 제출 현황 -->
+    <div class="status-box" id="status-box">
+      <div class="status-header">이번 주 제출 현황</div>
+      <div id="status-list"><div class="loading">불러오는 중...</div></div>
+    </div>
+
+    <!-- 마감 안내 -->
+    <div id="deadline-notice" class="deadline-notice hidden">
+      🔒 수요일 정오에 마감되었습니다. 미제출자는 전주 파일로 대체됩니다.
+    </div>
 
     <form id="wp-form">
       <input type="hidden" id="week-date">
@@ -37,12 +48,6 @@
     </form>
 
     <div id="result" class="result hidden"></div>
-
-    <div id="locked-msg" class="locked hidden">
-      <div class="lock-icon">🔒</div>
-      <h2>제출 마감</h2>
-      <p>수요일 정오에 마감되었습니다.<br>이번 주는 전주 제출 파일로 진행됩니다.</p>
-    </div>
   </div>
 
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
