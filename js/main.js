@@ -45,7 +45,7 @@ async function loadAll() {
     sb.from('ppt_submissions').select('member_name').eq('week_date', nextFriday).eq('type', 'wp')
   ]);
 
-  const members = membersRes.data || [];
+  const members = (membersRes.data || []);
   const submitted = new Set((submissionsRes.data || []).map(s => s.member_name));
 
   // 드롭다운
@@ -67,7 +67,10 @@ async function loadAll() {
   }).join('');
 }
 
-loadAll();
+loadAll().catch(err => {
+  document.getElementById('status-list').innerHTML = '<div class="loading">불러오기 실패. 새로고침 해주세요.</div>';
+  console.error(err);
+});
 
 // 파일 선택 표시
 wpFile.addEventListener('change', () => {
