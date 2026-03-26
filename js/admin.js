@@ -74,18 +74,13 @@ const TYPE_LABELS = {
   education: '네트워킹 교육',
   vice_chair: '부의장 자료',
   feature: '피처 프레젠테이션',
-  wp: 'WP',
-  result: '📎 최종 장표'
+  wp: 'WP'
 };
 
 async function updateDownloadList(subs, weekDate) {
   const list = document.getElementById('download-list');
 
-  // 최종 결과물도 조회
-  const { data: resultSubs } = await sb.from('ppt_submissions')
-    .select('*').eq('week_date', weekDate).eq('type', 'result');
-
-  const allSubs = [...(resultSubs || []), ...subs];
+  const allSubs = subs.filter(s => s.type !== 'result');
 
   if (!allSubs.length) {
     list.innerHTML = '<div class="loading">이 주차에 업로드된 파일이 없습니다.</div>';
